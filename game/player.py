@@ -20,10 +20,10 @@ class Player:
     def make_guess(self, board: Board):
         pass
 
-    def record_win(self, board: Board):
+    def record_win(self, winning_board: Board, losing_board: Board):
         pass
 
-    def record_loss(self, board: Board):
+    def record_loss(self, losing_board: Board, winning_board: Board):
         pass
 
 
@@ -72,17 +72,36 @@ class HumanPlayer(Player):
         return new_board
 
     def make_guess(self, board: Board) -> (int, int):
-        # print("Make a guess: ")
-        # coords = map(lambda a: a.strip(), input().split(','))
-        # if coords[0]
-        # return coords[0], coords[1]
-        pass
+        working = True
+        coord = None
+        while working:
+            print("Please enter coordinates to strike: ")
+            choices = input().split(',')
+            coord = (int(choices[0].strip()), int(choices[1].strip()))
+            if 0 <= coord[0] < board.width and 0 <= coord[1] < board.height:
+                if coord in board.guesses:
+                    print("{} has already been tried".format(coord))
+                else:
+                    working = False
+            else:
+                print("Only accepts coordinates in range (0-{}, 0-{})".format(
+                    board.width, board.height))
 
-    def record_win(self, board: Board):
+        if board.is_hit(coord):
+            print("Hit at coordinate {}!".format(coord))
+            sunk_ship = board.add_guess(coord, True)
+            if sunk_ship is not None:
+                print("Sunk enemy {}. Last shot at {}".format(
+                    sunk_ship.name, coord))
+        else:
+            board.add_guess(coord, False)
+            print("Miss at coordinate {}!".format(coord))
+
+    def record_win(self, winning_board: Board, losing_board: Board):
         print("Congratulations {}, you have won!".format(self.player_name))
-        board.print_board(show_ships=True)
+        winning_board.print_board(show_ships=True)
         print("Winning stats:")
-        board.print_stats()
+        winning_board.print_stats()
 
 
 
