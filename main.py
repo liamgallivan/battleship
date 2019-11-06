@@ -1,6 +1,6 @@
 """
 Author: Liam Gallivan
-Description: Runs game game
+Description: For testing and running game
 """
 from game.engine.engine import BattleshipEngine
 from game.player import HumanPlayer

@@ -25,8 +25,8 @@ class Ship:
         elif self.dir == Directions.WEST:
             horiz_mod = -1
 
-        return [(self.begin_coord[0] + horiz_mod * i,
-                 self.begin_coord[1] + vert_mod * i) for i in range(self.size)]
+        return set([(self.begin_coord[0] + horiz_mod * i,
+                 self.begin_coord[1] + vert_mod * i) for i in range(self.size)])
 
 
 def get_standard_ship_types() -> list:
