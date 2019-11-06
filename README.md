@@ -1,11 +1,11 @@
 # Battleship AI
-Engine and AI for classic boardgame "Battleship"
+Engine and AI for classic boardgame "Battleship" in command line format
 
 ## Rules
 The rules used for this version of the game are as follows:
 
 ### Goal
-Sink all of opponents ships
+Sink all of opponents ships before they can sink all of yours
 
 ### Setup
 Each player places ships in grid
@@ -25,8 +25,16 @@ Players take turns declaring grid coordinates
 
 
 ## Setup
+```
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+Run main.py for current test(Human vs simple AI)
 
 ## Todo:
+- Design and implement more efficient AI
+- Script for data collection and running game in bulk
 
-## info
  
