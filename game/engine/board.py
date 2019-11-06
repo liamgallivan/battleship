@@ -76,11 +76,12 @@ class Board:
             self.guess_matrix[coord[0]][coord[1]] = 1
             curr_ship = None
             for ship in self.ships:
-                if coord in ship.coordinates:
+                if coord in set(ship.coordinates):
                     curr_ship = ship
                     break
 
-            if curr_ship is not None and curr_ship.coordinates.issubset(self.hits):
+            if curr_ship is not None and \
+                    set(curr_ship.coordinates).issubset(self.hits):
                 # records coord when ship sunk
                 self.sunk_ships[curr_ship.name] = coord
                 return curr_ship

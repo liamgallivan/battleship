@@ -54,7 +54,7 @@ class HumanPlayer(Player):
                     begin_coord = (choice[0], choice[1])
                     direction = Directions[choice[2].strip()]
                     new_ship = Ship(name, size, begin_coord, direction)
-                    new_occupied_coordinates = new_ship.get_all_coord()
+                    new_occupied_coordinates = new_ship.coordinates
                     end_coord = new_occupied_coordinates[-1]
                     if 0 <= begin_coord[0] < board_width and \
                             0 <= begin_coord[1] < board_height \
@@ -75,6 +75,7 @@ class HumanPlayer(Player):
         working = True
         coord = None
         while working:
+            board.print_board()
             print("Please enter coordinates to strike: ")
             choices = input().split(',')
             coord = (int(choices[0].strip()), int(choices[1].strip()))
@@ -85,7 +86,7 @@ class HumanPlayer(Player):
                     working = False
             else:
                 print("Only accepts coordinates in range (0-{}, 0-{})".format(
-                    board.width, board.height))
+                    board.width - 1, board.height - 1))
 
         if board.is_hit(coord):
             print("Hit at coordinate {}!".format(coord))
