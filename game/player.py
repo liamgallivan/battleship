@@ -7,6 +7,7 @@ Description: 'Player' base class for generic methods and attributes
 from .engine.board import Board
 from .engine.ships import Ship, get_standard_ship_types
 from .util import Directions
+import random
 
 
 class Player:
@@ -52,7 +53,7 @@ class HumanPlayer(Player):
                     print("Incorrect format for input. Please try again.")
                 else:
                     begin_coord = (choice[0], choice[1])
-                    direction = Directions[choice[2].strip()]
+                    direction = Directions[choice[2].strip().upper()]
                     new_ship = Ship(name, size, begin_coord, direction)
                     new_occupied_coordinates = new_ship.coordinates
                     end_coord = new_occupied_coordinates[-1]
@@ -105,6 +106,26 @@ class HumanPlayer(Player):
         winning_board.print_stats()
 
 
+class SimpleAIPlayer(Player):
 
+    def create_board(self, board_width, board_height) -> Board:
+        # pre-generated board
+        ship_placements = []
+        ship_placements.append(Ship("Carrier", 5, (3, 4), Directions.NORTH))
+        ship_placements.append(Ship("Battleship", 4, (0, 0), Directions.EAST))
+        ship_placements.append(Ship("Cruiser", 3, (8, 9), Directions.WEST))
+        ship_placements.append(Ship("Submarine", 3, (9, 9), Directions.SOUTH))
+        ship_placements.append(Ship("Destroyer", 2, (4, 6), Directions.NORTH))
+        return Board(board_width, board_height, ship_placements)
 
+    def make_guess(self, board: Board):
+        working = True
+        coord = None
+        while working:
+            coord = (random.randrange(0, board.width),
+                     random.randrange(0, board.height))
+            if 0 <= coord[0] < board.width and 0 <= coord[1] < board.height \
+                    and coord not in board.guesses:
+                working = False
 
+        board.add_guess(coord, board.is_hit(coord))
