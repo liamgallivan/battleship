@@ -30,23 +30,16 @@ class BattleshipEngine:
                 self.player1.make_guess(self.board2)
                 self.curr_turn = 2
                 if self.board2.check_win():
-                    game_on = False
-                    winner = 1
+                    self.player1.record_win(self.board2)
+                    self.player2.record_loss(self.board1)
+                    return
             else:
                 self.player2.make_guess(self.board1)
                 self.curr_turn = 1
                 if self.board2.check_win():
-                    game_on = False
-                    winner = 2
-
-        winner_board = self.board2
-        if winner == 1:
-            winner_board = self.board1
-
-        print("Congratulations Player {}. You have won!".format(winner))
-        winner_board.print_board()
-        print("Winning stats:")
-        winner_board.print_stats()
+                    self.player2.record_win(self.board1)
+                    self.player1.record_loss(self.board2)
+                    return
 
 
     def setup(self):

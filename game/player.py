@@ -8,10 +8,11 @@ from .engine.board import Board
 from .engine.ships import Ship, get_standard_ship_types
 from .util import Directions
 
+
 class Player:
 
-    def __init__(self):
-        pass
+    def __init__(self, player_name):
+        self.player_name = player_name
 
     def create_board(self, board_width, board_height) -> Board:
         pass
@@ -19,11 +20,14 @@ class Player:
     def make_guess(self, board: Board):
         pass
 
+    def record_win(self, board: Board):
+        pass
+
+    def record_loss(self, board: Board):
+        pass
+
+
 class HumanPlayer(Player):
-
-    def __init__(self):
-        super(Player)
-
     def create_board(self, board_width, board_height) -> Board:
         ship_types = get_standard_ship_types()
         print("Please place ships on board({}x{}):\n\n".format(
@@ -74,6 +78,11 @@ class HumanPlayer(Player):
         # return coords[0], coords[1]
         pass
 
+    def record_win(self, board: Board):
+        print("Congratulations {}, you have won!".format(self.player_name))
+        board.print_board(show_ships=True)
+        print("Winning stats:")
+        board.print_stats()
 
 
 

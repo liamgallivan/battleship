@@ -23,6 +23,18 @@ class Board:
                 for tup in ship.coordinates:
                     self.valid_hits.add(tup)
 
+    def print_stats(self):
+        print("Stats for board:")
+        if self.check_win():
+            print("Winning board")
+        else:
+            print("Ongoing board")
+
+        print("Number of guesses: {}".format(len(self.guesses)))
+        print("Number of hits: {}".format(len(self.hits)))
+        print("Number of misses: {}".format(len(self.misses)))
+        print("Hit percentage: {}".format(float(len(self.hits)) / float(len(self.guesses))))
+
     def print_board(self, show_ships=False):
         edge_line = "-" * (self.width * 5 + 4)
         print(edge_line)
@@ -79,5 +91,7 @@ class Board:
             self.guess_matrix[coord[0]][coord[1]] = -1
             return None
 
+    def check_win(self):
+        return len(self.valid_hits) <= len(self.hits)
 
 
